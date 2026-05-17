@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { SITE, whatsappLink } from "@/lib/site";
+import logo from "@/assets/logo.png";
 
 export function SiteFooter() {
   return (
@@ -8,7 +9,7 @@ export function SiteFooter() {
         <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-3">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-5">
-              <div className="size-6 rounded-sm bg-emerald-academy" />
+              <img src={logo} alt="Zubair Online Academy logo" width={28} height={28} loading="lazy" className="size-7 object-contain" />
               <span className="font-serif text-lg font-semibold tracking-tight text-emerald-academy">
                 {SITE.name}
               </span>

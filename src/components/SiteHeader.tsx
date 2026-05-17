@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { SITE } from "@/lib/site";
+import logo from "@/assets/logo.png";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -19,7 +20,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-foreground/5 bg-background/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <div className="size-8 rounded-sm bg-emerald-academy" aria-hidden />
+          <img src={logo} alt="Zubair Online Academy logo" width={36} height={36} className="size-9 object-contain" />
           <span className="font-serif text-xl font-semibold tracking-tight text-emerald-academy">
             {SITE.short}
           </span>
