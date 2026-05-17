@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import heroImg from "@/assets/hero-classroom.jpg";
 import { CourseCard } from "@/components/CourseCard";
+import { Reveal } from "@/components/Reveal";
 import { FEATURED_COURSES } from "@/data/courses";
 import { SITE, whatsappLink } from "@/lib/site";
 import { BookOpen, Clock, ShieldCheck, Globe } from "lucide-react";
@@ -39,32 +40,32 @@ function Home() {
       <section className="relative overflow-hidden pt-16 pb-20 sm:pt-20 sm:pb-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-col items-center text-center">
-            <span className="mb-6 inline-block rounded-full bg-emerald-light px-3 py-1 text-xs font-semibold tracking-wider text-emerald-academy uppercase">
+            <span className="mb-6 inline-block rounded-full bg-emerald-light px-3 py-1 text-xs font-semibold tracking-wider text-emerald-academy uppercase animate-fade-in-up" style={{ animationDelay: "0ms" }}>
               Global Online Learning
             </span>
-            <h1 className="mb-8 font-serif text-4xl leading-[1.1] sm:text-5xl lg:text-6xl text-balance text-foreground lg:max-w-[24ch]">
+            <h1 className="mb-8 font-serif text-4xl leading-[1.1] sm:text-5xl lg:text-6xl text-balance text-foreground lg:max-w-[24ch] animate-fade-in-up" style={{ animationDelay: "80ms" }}>
               Learn Quran, Arabic and Islamic Studies from Expert Teachers Worldwide
             </h1>
-            <p className="mb-10 max-w-[58ch] text-base sm:text-lg text-muted-foreground text-pretty">
+            <p className="mb-10 max-w-[58ch] text-base sm:text-lg text-muted-foreground text-pretty animate-fade-in-up" style={{ animationDelay: "180ms" }}>
               Access authentic knowledge through structured curricula designed for the modern student.
               From foundational Tajweed to advanced Fiqh, our academy connects you with qualified scholars.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 animate-fade-in-up" style={{ animationDelay: "260ms" }}>
               <Link
                 to="/register/student"
-                className="rounded-md bg-emerald-academy px-6 py-3 text-sm font-medium text-white hover:opacity-90 transition"
+                className="rounded-md bg-emerald-academy px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 hover:-translate-y-0.5 active:translate-y-0"
               >
                 Apply Now
               </Link>
               <Link
                 to="/courses"
-                className="rounded-md bg-transparent px-6 py-3 text-sm font-medium text-foreground ring-1 ring-foreground/10 hover:bg-muted transition"
+                className="rounded-md bg-transparent px-6 py-3 text-sm font-medium text-foreground ring-1 ring-foreground/10 transition hover:bg-muted hover:-translate-y-0.5"
               >
                 Explore Courses
               </Link>
             </div>
           </div>
-          <div className="mt-16 sm:mt-20">
+          <div className="mt-16 sm:mt-20 animate-fade-in" style={{ animationDelay: "380ms" }}>
             <div className="overflow-hidden rounded-xl ring-1 ring-black/5">
               <img
                 src={heroImg}
@@ -76,6 +77,90 @@ function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="bg-muted/40 py-20 sm:py-24 border-y border-border">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal className="mb-14 max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-widest text-emerald-academy">Why Choose Us</span>
+            <h2 className="mt-3 font-serif text-3xl sm:text-4xl text-foreground">A learning experience rooted in tradition, built for today.</h2>
+          </Reveal>
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+            {WHY.map((w, i) => (
+              <Reveal key={w.title} delay={i * 100} className="flex flex-col gap-3">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-emerald-academy text-white">
+                  <w.icon className="size-5" />
+                </div>
+                <h3 className="font-serif text-lg text-foreground">{w.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{w.body}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Courses */}
+      <section className="py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-[50ch]">
+              <h2 className="font-serif text-3xl sm:text-4xl text-foreground">Featured Courses</h2>
+              <p className="mt-3 text-muted-foreground">Explore our most popular programs designed to deepen your understanding and mastery.</p>
+            </div>
+            <Link to="/courses" className="text-sm font-medium text-emerald-academy hover:underline">
+              View all courses →
+            </Link>
+          </Reveal>
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {FEATURED_COURSES.map((c, i) => (
+              <Reveal key={c.id} delay={i * 90}>
+                <CourseCard course={c} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="bg-emerald-academy py-20 sm:py-24 text-white">
+        <div className="mx-auto max-w-7xl px-6">
+          <Reveal className="mb-14 max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-widest text-emerald-light/70">Student Voices</span>
+            <h2 className="mt-3 font-serif text-3xl sm:text-4xl">Trusted by students in 40+ countries.</h2>
+          </Reveal>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {TESTIMONIALS.map((t, i) => (
+              <Reveal key={t.name} delay={i * 120}>
+                <figure className="rounded-xl bg-white/5 p-6 ring-1 ring-white/10 transition hover:bg-white/10">
+                  <blockquote className="font-serif text-lg leading-snug text-pretty">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-6 text-sm">
+                    <span className="block font-medium">{t.name}</span>
+                    <span className="text-xs text-emerald-light/70">{t.country}</span>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 sm:py-24">
+        <Reveal className="mx-auto max-w-4xl px-6 text-center">
+          <h2 className="font-serif text-3xl sm:text-4xl text-foreground mb-4">Begin your journey today.</h2>
+          <p className="text-muted-foreground mb-8">Apply for a free trial session, or message us directly on WhatsApp.</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link to="/register/student" className="rounded-md bg-emerald-academy px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 hover:-translate-y-0.5">
+              Apply as Student
+            </Link>
+            <a href={whatsappLink()} target="_blank" rel="noreferrer" className="rounded-md px-6 py-3 text-sm font-medium text-foreground ring-1 ring-foreground/10 transition hover:bg-muted hover:-translate-y-0.5">
+              Chat on WhatsApp
+            </a>
+          </div>
+        </Reveal>
       </section>
 
       {/* Why Choose Us */}
