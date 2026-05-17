@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Zubair Online Academy",
   short: "Zubair Academy",
-  tagline: "Learn Arabic and Islamic Studies from Expert Teachers Worldwide",
+  tagline: "Learn Quran, Arabic and Islamic Studies from Expert Teachers Worldwide",
   email: "info@zubairacademy.com",
   phone: "+92 300 0000000",
   whatsappNumber: "923000000000", // digits only, for wa.me
