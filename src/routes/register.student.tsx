@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { COUNTRIES } from "@/data/countries";
 import { COURSES } from "@/data/courses";
 import { whatsappLink } from "@/lib/site";
+import { collections } from "@/lib/firebase";
+import { addDoc, serverTimestamp } from "firebase/firestore";
 
 export const Route = createFileRoute("/register/student")({
   component: StudentRegister,
@@ -39,13 +41,21 @@ function StudentRegister() {
     defaultValues: { fullName: "", email: "", whatsapp: "", country: "", course: "" },
   });
 
-  const onSubmit = (data: FormValues) => {
-    toast.success("Registration received!", {
-      description: "We'll contact you on WhatsApp shortly to schedule your free trial.",
-    });
-    const msg = `Assalamu Alaikum, I'd like to register as a student.\n\nName: ${data.fullName}\nEmail: ${data.email}\nCountry: ${data.country}\nCourse: ${data.course}`;
-    window.open(whatsappLink(msg), "_blank", "noopener");
-    reset();
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await addDoc(collections.students, { ...data, createdAt: serverTimestamp() });
+      toast.success("Registration received!", {
+        description: "We'll contact you on WhatsApp shortly to schedule your free trial.",
+      });
+      const msg = `Assalamu Alaikum, I'd like to register as a student.\n\nName: ${data.fullName}\nEmail: ${data.email}\nCountry: ${data.country}\nCourse: ${data.course}`;
+      window.open(whatsappLink(msg), "_blank", "noopener");
+      reset();
+    } catch (err) {
+      console.error(err);
+      toast.error("Could not submit registration", {
+        description: "Please check your connection and try again.",
+      });
+    }
   };
 
   return (
