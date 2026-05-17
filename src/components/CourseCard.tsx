@@ -2,7 +2,7 @@ import type { Course } from "@/data/courses";
 
 export function CourseCard({ course }: { course: Course }) {
   return (
-    <article className="group relative flex flex-col bg-card ring-1 ring-black/5 rounded-xl overflow-hidden transition-shadow hover:shadow-md">
+    <article className="group relative flex flex-col bg-card ring-1 ring-black/5 rounded-xl overflow-hidden hover-lift hover:shadow-lg">
       <div className="aspect-[4/3] overflow-hidden bg-muted">
         <img
           src={course.image}

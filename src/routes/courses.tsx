@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CourseCard } from "@/components/CourseCard";
+import { Reveal } from "@/components/Reveal";
 import { COURSES } from "@/data/courses";
 
 export const Route = createFileRoute("/courses")({
@@ -20,7 +21,7 @@ function CoursesPage() {
   return (
     <section className="py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-14 max-w-3xl">
+        <div className="mb-14 max-w-3xl animate-fade-in-up">
           <span className="inline-block rounded-full bg-emerald-light px-3 py-1 text-xs font-semibold tracking-wider text-emerald-academy uppercase mb-5">
             Curriculum
           </span>
@@ -32,7 +33,11 @@ function CoursesPage() {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {COURSES.map((c) => <CourseCard key={c.id} course={c} />)}
+          {COURSES.map((c, i) => (
+            <Reveal key={c.id} delay={i * 80}>
+              <CourseCard course={c} />
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
