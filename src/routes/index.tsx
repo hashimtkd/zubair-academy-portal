@@ -43,7 +43,7 @@ function Home() {
               Global Online Learning
             </span>
             <h1 className="mb-8 font-serif text-4xl leading-[1.1] sm:text-5xl lg:text-6xl text-balance text-foreground lg:max-w-[24ch]">
-              Learn Arabic and Islamic Studies from Expert Teachers Worldwide
+              Learn Quran, Arabic and Islamic Studies from Expert Teachers Worldwide
             </h1>
             <p className="mb-10 max-w-[58ch] text-base sm:text-lg text-muted-foreground text-pretty">
               Access authentic knowledge through structured curricula designed for the modern student.
