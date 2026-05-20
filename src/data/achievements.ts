@@ -4,6 +4,7 @@ export type Achievement = {
   title: string;
   detail: string;
   initials: string;
+  imageUrl?: string;
 };
 
 export const ACHIEVEMENTS: Achievement[] = [

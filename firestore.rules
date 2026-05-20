@@ -1,0 +1,102 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Check if the request is from an authenticated user
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper to get admin profile from the 'admins' collection
+    function getAdminData() {
+      return get(/databases/$(database)/documents/admins/$(request.auth.uid)).data;
+    }
+    
+    // Check if the user is a registered admin (exists in 'admins' collection)
+    function isAdmin() {
+      return isAuthenticated() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // Check if the user is a super_admin
+    function isSuperAdmin() {
+      return isAdmin() && getAdminData().role == 'super_admin';
+    }
+
+    // Admins Collection
+    match /admins/{adminId} {
+      allow read: if isAuthenticated();
+      // Allow creation of first super_admin in seed mode (anyone can register as admin if no admins exist)
+      allow create: if isAuthenticated() && (
+        !exists(/databases/$(database)/documents/admins/$(request.auth.uid)) || 
+        isSuperAdmin()
+      );
+      allow update: if isSuperAdmin() || (request.auth.uid == adminId && request.resource.data.role == resource.data.role);
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Admissions Collection
+    match /admissions/{admissionId} {
+      // Anyone can submit (create) a student admission request
+      allow create: if true;
+      // Only admins can read and update (approve/reject/add notes)
+      allow read, update: if isAdmin();
+      // Only super_admins can delete records permanently
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Teacher Applications Collection
+    match /teacher_applications/{applicationId} {
+      // Anyone can submit (create) a teacher application
+      allow create: if true;
+      // Only admins can read and update (approve/reject/add notes)
+      allow read, update: if isAdmin();
+      // Only super_admins can delete records permanently
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Students Collection
+    match /students/{studentId} {
+      // Only admins can read, create, or update student records
+      allow read, write: if isAdmin();
+      // Only super_admins can delete student records
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Teachers Collection
+    match /teachers/{teacherId} {
+      // Public read access for approved teachers (for the public faculty page)
+      allow read: if resource.data.status == 'approved' || isAdmin();
+      // Only admins can create and update teacher records
+      allow write: if isAdmin();
+      // Only super_admins can delete teacher records
+      allow delete: if isSuperAdmin();
+    }
+    
+    // Courses Collection
+    match /courses/{courseId} {
+      // Public read access for anyone
+      allow read: if true;
+      // Admins can write
+      allow write: if isAdmin();
+    }
+    
+    // Achievements Collection
+    match /achievements/{achievementId} {
+      // Public read access for anyone
+      allow read: if true;
+      // Admins can write
+      allow write: if isAdmin();
+    }
+    
+    // Settings Collection
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Backups Collection
+    match /backups/{backupId} {
+      allow read, write: if isSuperAdmin();
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore, collection } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD92Hlm6Z5tIPjvPEexMfhH4wrbOoZZxWE",
@@ -15,6 +16,7 @@ const firebaseConfig = {
 export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 export const db = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);
+export const auth = getAuth(firebaseApp);
 
 // Typed collection refs
 export const collections = {
@@ -24,6 +26,8 @@ export const collections = {
   achievements: collection(db, "achievements"),
   settings: collection(db, "settings"),
   admins: collection(db, "admins"),
+  admissions: collection(db, "admissions"),
+  teacherApplications: collection(db, "teacher_applications"),
 };
 
 // Lazy analytics — only in the browser, and only if supported.
@@ -33,3 +37,4 @@ export async function initAnalytics() {
   if (await isSupported()) return getAnalytics(firebaseApp);
   return null;
 }
+
